@@ -1,5 +1,3 @@
-import ansi, { CSPair } from 'ansi-styles';
-
 const formattingCode = /\u00C2?\u00A7([a-fklmnor0-9])/g;
 
 const ansiMap = new Map<string, CSPair>();
@@ -57,20 +55,6 @@ class Description {
 	 */
 	toRaw(): string {
 		return this.descriptionText.replace(formattingCode, '');
-	}
-
-	/**
-	 * Converts the special formatting characters to ANSI escape codes, commonly used for terminal formatting
-	 * @returns {string} The ANSI escaped formatting text
-	 */
-	toANSI(): string {
-		return this.descriptionText.replace(formattingCode, (match: string, p1: string): string => {
-			const value = ansiMap.get(p1);
-
-			if (!value) return ansi.reset.open;
-
-			return value.open;
-		}) + ansi.reset.open;
 	}
 }
 
